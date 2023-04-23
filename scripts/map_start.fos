@@ -189,8 +189,8 @@ class MenuStart: CenteredMenuHandler
 			@tmap1 = loc.GetMapByIndex( 1 );
 		}
 		
-//		if( terminal.START_TERMINAL_MODE == MODE_START_TERMINAL )
-//		{  
+		if( terminal.START_TERMINAL_MODE == MODE_START_TERMINAL )
+		{  
 //			if( menu.ButtonMsg( STR_MAP_START_MENU_INFORMATION ) )
 //			{
 //				PlayGenericSound( map, cr.HexX, cr.HexY, "BUTIN1.mp3", 5 );
