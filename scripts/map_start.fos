@@ -189,14 +189,14 @@ class MenuStart: CenteredMenuHandler
 			@tmap1 = loc.GetMapByIndex( 1 );
 		}
 		
-		if( terminal.START_TERMINAL_MODE == MODE_START_TERMINAL )
-		{  
-			if( menu.ButtonMsg( STR_MAP_START_MENU_INFORMATION ) )
-			{
-				PlayGenericSound( map, cr.HexX, cr.HexY, "BUTIN1.mp3", 5 );
-				OpenLinkRemote( cr, "https://forp-tnf.fandom.com/ru/wiki/FOnline_RolePlay_TNF_%D0%92%D0%B8%D0%BA%D0%B8" );
-				return true;
-			}
+//		if( terminal.START_TERMINAL_MODE == MODE_START_TERMINAL )
+//		{  
+//			if( menu.ButtonMsg( STR_MAP_START_MENU_INFORMATION ) )
+//			{
+//				PlayGenericSound( map, cr.HexX, cr.HexY, "BUTIN1.mp3", 5 );
+//				OpenLinkRemote( cr, "https://forp-tnf.fandom.com/ru/wiki/FOnline_RolePlay_TNF_%D0%92%D0%B8%D0%BA%D0%B8" );
+//				return true;
+//			}
 			
 			if( menu.ButtonMsg( STR_MAP_START_MENU_BEGIN_GAME ) )
 			{
