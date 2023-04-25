@@ -256,6 +256,7 @@ void SmokeCig( Critter& cr, Item& cigarette )
 		if( cigarette.Val0 < 1 )
 		{
 			_SubItem( cigarette, 1 );
+			cr.AddItem ( PID_CIGARETTE_BUTT, 1);
 		}
 	}
 	TobaccoEffect( cr );

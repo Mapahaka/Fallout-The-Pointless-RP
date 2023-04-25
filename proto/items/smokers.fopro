@@ -221,3 +221,18 @@ Material=15
 Partial_Item=99
 StartValue_0=4
 Slot=5
+
+[Proto] # PID_CIGARETTE_BUTT
+ProtoId=23815
+Type=24
+PicMap=art\items\misc\cigaret2_itm.png
+PicInv=art\inven\misc\cig\Zigarette-okurok_inv.png
+Flags=402653214
+DisableEgg=1
+Stackable=1
+Weight=7
+Volume=1
+SoundId=48
+Cost=5
+Material=15
+Slot=5
