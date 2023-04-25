@@ -850,6 +850,15 @@ const uint16[] VisorsSTA 	 = { PID_STA_VISOR, PID_HELMET_PA, PID_HELMET_HPA, PID
 const uint16[] HelmetsPA	 = { PID_HELMET_PA, PID_HELMET_HPA, PID_HELMET_APA, PID_HELMET_APA2, PID_HELMET_HYENA };
 const uint16[] HelmetsCA	 = { PID_HELMET_CA, PID_HELMET_CA_MK2, PID_HELMET_CA_MK3, PID_HELMET_CA_BOS, PID_HELMET_CA_ENCLAVE, PID_HELMET_CA_VC };
 								 
+uint[] CigButtAmoutHash = 
+{
+    GetStrHash( "art\\items\\misc\\cigbutts.png" ),
+	GetStrHash( "art\\items\\misc\\cigbutt_1.png" ),
+    GetStrHash( "art\\items\\misc\\cigbutt_2.png" ),
+    GetStrHash( "art\\items\\misc\\cigbutt_3.png" ),
+	GetStrHash( "art\\items\\misc\\cigbutt_4.png" ),	
+};
+
 uint[] CoinAmoutHash = 
 {
     GetStrHash( "art\\items\\misc\\coins.png" ),

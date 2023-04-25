@@ -812,11 +812,27 @@ uint e_stack_items( uint[]@ values )
 			case( PID_SHELL_CASING):
 				ShellAmountChanger( groundItm, itemCount );
 				break;
+			case( PID_CIGARETTE_BUTT):
+				CigButtAmountChanger( groundItm, itemCount );
+				break;
 		}
 		
 		groundItm.Update( );
     }
     return 0;
+}
+// Change PicMap for dropped cig butts - Util func
+void CigButtAmountChanger( Item& item, uint amount)
+{
+    if( amount <= 4 )
+	{
+		item.PicMap = CigButtAmoutHash[ amount ];
+	}
+	else
+	{
+		item.PicMap = CigButtAmoutHash[ 0 ];
+	}
+    item.Update();
 }
 
 // Change PicMap for dropped coins - Util func

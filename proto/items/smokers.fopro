@@ -225,7 +225,7 @@ Slot=5
 [Proto] # PID_CIGARETTE_BUTT
 ProtoId=23815
 Type=24
-PicMap=art\items\misc\cigaret2_itm.png
+PicMap=art\items\misc\cigbutt_1.png
 PicInv=art\inven\misc\cig\Zigarette-okurok_inv.png
 Flags=402653214
 DisableEgg=1
