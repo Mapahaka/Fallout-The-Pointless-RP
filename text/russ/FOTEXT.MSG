@@ -1989,6 +1989,7 @@ Balance: |0xFFFF00 @lex balance@|0x3CF800 $ @lex change@}
 {101186}{}{Количество: @lex amount@}
 {101187}{}{Critter Time Events}
 {101188}{}{Удалить CTE по номеру}
+{101189}{}{AoE Ослепление}
 
 # GM menu NPC groups
 # Mobs

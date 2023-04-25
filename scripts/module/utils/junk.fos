@@ -495,6 +495,18 @@ shared string enlistSTR( string@[]@ list, string divider = ", ", string prefix =
 	
 	string result = prefix + list[0];
 	for( uint i = 1; i < len; i++ )
+		result += divider + checkNull( list[i] );
+	
+	return result + postfix;
+}
+
+shared string enlistSTR( string[] list, string divider = ", ", string prefix = "", string postfix = "" )
+{ 
+	uint len = list.length();
+	if( len == 0 ) return "[empty]";
+	
+	string result = prefix + list[0];
+	for( uint i = 1; i < len; i++ )
 		result += divider + list[i];
 	
 	return result + postfix;
