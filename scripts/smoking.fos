@@ -57,10 +57,18 @@ void TakeCigarettes( Critter& cr, Item& pack )
 
 void TrySmoking( Critter& cr, Item& item )
 {
-	if( !hasItems( cr, heatSources ) )
+	uint16 PidT = item.GetProtoId();
+	
+	if ( !hasItems( cr, heatSources ) ) 
 	{
+		if ( PidT == PID_CIGARETTE_IGN || PidT == PID_PREWAR_CIGAR1_PRT || PidT == PID_PREWAR_CIGAR2_PRT )
+		{		
+		}
+		else if ( !hasItems( cr, heatSources ) )
+		{
 		cr.SayMsg( SAY_NETMSG, TEXTMSG_TEXT, STR_NEED_FIRE_TO_SMOKE );
 		return;
+		}
 	}
 	
 	if( hasItems( cr, SmokeStopers, SLOT_HEAD ) )
@@ -77,7 +85,7 @@ void TrySmoking( Critter& cr, Item& item )
 	
 	Map @ map = cr.GetMap();
 	
-	uint16 PidT = item.GetProtoId();
+	
 	if( PidT == PID_CIGARETTE_IGN || PidT == PID_PREWAR_CIGAR1_PRT || PidT == PID_PREWAR_CIGAR2_PRT )
 	{
 	
@@ -226,6 +234,24 @@ void SmokeCig( Critter& cr, Item& cigarette )
 	else
 	{
 		cigarette.REMAINING_USES--;
+		string hash = "art\\inven\\misc\\cig\\Zigarette4_inv.png";
+		switch( cigarette.REMAINING_USES )
+		{			
+			case( 4 ):
+				hash = "art\\inven\\misc\\cig\\Zigarette4_inv.png";
+				break;
+			case( 3 ):
+				hash = "art\\inven\\misc\\cig\\Zigarette3_inv.png";
+				break;							
+			case( 2 ):
+				hash = "art\\inven\\misc\\cig\\Zigarette2_inv.png";
+				break;
+			case( 1 ):
+				hash = "art\\inven\\misc\\cig\\Zigarette1_inv.png";
+				break;
+		}
+		
+		cigarette.PicInv = GetStrHash( hash );
 		cigarette.Update();
 		if( cigarette.Val0 < 1 )
 		{
