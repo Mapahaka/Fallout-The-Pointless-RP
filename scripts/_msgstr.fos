@@ -554,6 +554,8 @@
 #define STR_FEEL_SICK						 ( 9512 )
 #define STR_EMOTE_VOMITS					 ( 9513 )
 #define STR_ABOUT_TO_VOMIT					 ( 9514 ) 
+#define STR_EMOTE_TRY2VOMIT					 ( 9515 )
+#define STR_EMOTE_CANTVOMIT					 ( 9516 )
 
 // Resuracting
 #define STR_WASTED_ITEM						 ( 9520 )
