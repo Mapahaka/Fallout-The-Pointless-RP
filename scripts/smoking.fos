@@ -59,6 +59,11 @@ void TrySmoking( Critter& cr, Item& item )
 {
 	uint16 PidT = item.GetProtoId();
 	
+	if( PidT == PID_CIGARETTE_BUTT )
+	{
+		return;
+	}
+	
 	if ( !hasItems( cr, heatSources ) ) 
 	{
 		if ( PidT == PID_CIGARETTE_IGN || PidT == PID_PREWAR_CIGAR1_PRT || PidT == PID_PREWAR_CIGAR2_PRT )
@@ -83,7 +88,7 @@ void TrySmoking( Critter& cr, Item& item )
 		return;
 	}
 	
-	Map @ map = cr.GetMap();
+	Map @ map = cr.GetMap();	
 	
 	
 	if( PidT == PID_CIGARETTE_IGN || PidT == PID_PREWAR_CIGAR1_PRT || PidT == PID_PREWAR_CIGAR2_PRT )
