@@ -1461,6 +1461,26 @@ bool critter_use_item( Critter& cr, Item& item, Critter@ targetCr, Item@ targetI
 		CheckSmokers( cr, item );
 		return true;
 	}
+	// Ignition Offer
+	if( ( pid == PID_LIGHTER ) && ( valid ( targetCr ) ) )
+	{
+		Item@ cig = targetCr.GetItem( 0, 1 );
+		if( cig.GetProtoId() == PID_CIGARETTE || cig.GetProtoId() == PID_PREWAR_CIGAR1 || cig.GetProtoId() == PID_PREWAR_CIGAR2 )
+		{
+			cr.Say( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_IGN_LIGHT );
+			PlayGenericSound( map, cr.HexX, cr.HexY, "zippo.ogg", 6);
+		}
+		else return true;
+		if( valid ( targetCr ) )
+		{
+			targetCr.ParamBase[CR_VAL0] = item.Id;
+			targetCr.ShowScreen( SCREEN_DIALOGBOX, 1, "dlg_Smoke" );
+			targetCr.Say( SAY_DIALOGBOX_TEXT, TEXTMSG_TEXT, STR_IGN_OFFER );
+			targetCr.Say( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
+			return true;
+		}						
+	}
+	
     // Towels
 	if( pid == PID_TOWEL || pid == PID_OLD_TOWEL )
 	{
@@ -4353,6 +4373,24 @@ void spillOut( Map& map, Item& container, Item& item )
 	{	
 		MoveItem( item, 1, map, sHx, sHy );
 	}
+}
+
+void dlg_Smoke( Critter& targetCr, uint answerI, string& answerS )
+{
+	Item@ item = GetItem( targetCr.ParamBase[CR_VAL0] );
+	
+	if( answerI == 0 && valid ( item ) )
+	{			
+		
+		if(targetCr.CountItem((PID_FIREPLACE_TOKEN))==0)
+		{
+			targetCr.AddItem((PID_FIREPLACE_TOKEN),1);
+			targetCr.SayMsg(SAY_NETMSG, TEXTMSG_TEXT, STR_CIG_OFFER);
+						
+			targetCr.DeleteItem((PID_FIREPLACE_TOKEN),1);
+		}	
+	}
+	return; 
 }
 
 #endif //__MAIN_MODULE__

@@ -14,6 +14,7 @@
 	
 	#ifndef SMOKING
 		import bool CheckSmokers( Critter& cr, Item& item ) from "smoking";
+		import void TrySmoking( Critter& cr, Item& item ) from "smoking";
 	#endif // SMOKING
 
 #endif // SMOKING_H
