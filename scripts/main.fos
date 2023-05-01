@@ -1467,7 +1467,7 @@ bool critter_use_item( Critter& cr, Item& item, Critter@ targetCr, Item@ targetI
 		Item@ cig = targetCr.GetItem( 0, 1 );
 		if( cig.GetProtoId() == PID_CIGARETTE || cig.GetProtoId() == PID_PREWAR_CIGAR1 || cig.GetProtoId() == PID_PREWAR_CIGAR2 )
 		{
-			cr.Say( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_IGN_LIGHT );
+			cr.SayMsg( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_IGN_LIGHT );
 			PlayGenericSound( map, cr.HexX, cr.HexY, "zippo.ogg", 6);
 		}
 		else return true;
@@ -1475,8 +1475,8 @@ bool critter_use_item( Critter& cr, Item& item, Critter@ targetCr, Item@ targetI
 		{
 			targetCr.ParamBase[CR_VAL0] = item.Id;
 			targetCr.ShowScreen( SCREEN_DIALOGBOX, 1, "dlg_Smoke" );
-			targetCr.Say( SAY_DIALOGBOX_TEXT, TEXTMSG_TEXT, STR_IGN_OFFER );
-			targetCr.Say( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
+			targetCr.SayMsg( SAY_DIALOGBOX_TEXT, TEXTMSG_TEXT, STR_IGN_OFFER );
+			targetCr.SayMsg( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
 			return true;
 		}						
 	}
@@ -4378,16 +4378,26 @@ void spillOut( Map& map, Item& container, Item& item )
 void dlg_Smoke( Critter& targetCr, uint answerI, string& answerS )
 {
 	Item@ item = GetItem( targetCr.ParamBase[CR_VAL0] );
-	
+	Item@ cig_type = targetCr.GetItem( 0, 1 );
+		
 	if( answerI == 0 && valid ( item ) )
 	{			
 		
 		if(targetCr.CountItem((PID_FIREPLACE_TOKEN))==0)
 		{
-			targetCr.AddItem((PID_FIREPLACE_TOKEN),1);
-			targetCr.SayMsg(SAY_NETMSG, TEXTMSG_TEXT, STR_CIG_OFFER);
-						
-			targetCr.DeleteItem((PID_FIREPLACE_TOKEN),1);
+			Map @ map = targetCr.GetMap();			
+			PlayGenericSound( map, targetCr.HexX, targetCr.HexY, targetCr.Stat[ ST_GENDER ] == GENDER_MALE ? "smoking_01.ogg" : "Fem_Smoking_01.ogg", 6 );
+			targetCr.SayMsg( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_CIGARETTES_SMOKN );
+			targetCr.Animate ( 0, 20, null, true, false );
+			map.SetTextMsg( targetCr.HexX, targetCr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CIG_SMOKE );	
+			if( cig_type.GetProtoId() == PID_CIGARETTE )
+			{
+				SmokeCig ( targetCr, cig_type);
+			}
+			else if ( cig_type.GetProtoId() == PID_PREWAR_CIGAR1 || cig_type.GetProtoId() == PID_PREWAR_CIGAR2 )
+			{
+				SmokeCigar ( targetCr, cig_type);
+			}			
 		}	
 	}
 	return; 

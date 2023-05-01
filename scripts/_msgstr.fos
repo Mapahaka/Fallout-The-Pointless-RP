@@ -15,9 +15,8 @@
 #define STR_FURNACE_FIRE               		 ( 533 )
 #define STR_FURNACE_HEAT               		 ( 534 )
 #define STR_FURNACE_SMOKE              		 ( 535 )
-#define STR_CIG_OFFER               		 ( 536 )
-#define STR_IGN_LIGHT               		 ( 537 )
-#define STR_IGN_OFFER               		 ( 538 )
+#define STR_IGN_LIGHT               		 ( 536 )
+#define STR_IGN_OFFER               		 ( 537 )
 
 #define STR_TOOL_BROKEN						 ( 700 )
 
