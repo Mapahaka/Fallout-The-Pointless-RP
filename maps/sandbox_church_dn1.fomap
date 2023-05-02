@@ -35601,8 +35601,6 @@ MapX                 87
 MapY                 176
 Dir                  3
 UID                  1
-ScriptName           mob_dynamic
-FuncName             init_turret
 Critter_Cond         1
 Critter_Anim1        0
 Critter_Anim2        0
