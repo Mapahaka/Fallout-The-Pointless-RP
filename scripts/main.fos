@@ -391,7 +391,7 @@ void critter_attacked( Critter& cr, Critter& attacker )
 		DEBUG_SAY( cr, "MANAGER FAILED" );//DEBUG ONLY
 	}
 }
-
+bool inspect_ltp_inited = false;
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Call on something critter steal another.
 bool critter_stealing( Critter& cr, Critter& thief, Item& item, uint count )
@@ -2071,9 +2071,16 @@ bool critter_use_skill( Critter& cr, int skill, Critter@ targetCr, Item@ targetI
 				return false;
 			}
 			cr.SayMsg( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_EMOTE_INSPECTS );
-			cr.Action( ACTION_PICK_CRITTER, 0, null );
+			cr.Action( ACTION_PICK_CRITTER, 0, null );						
 			
-			ShowContainer( cr, targetCr, TRANSFER_CRIT_LOOT );
+			if( !inspect_ltp_inited )
+			{
+				inspect_ltp_init();
+			}
+
+			cr.ParamBase[ ST_LTP_SEQUENCE_WAIT ] = 7000;
+			cr.ParamBase[ ST_LTP_SEQUENCE ] = 1;
+			StartProcess( cr, LTP_INSPECT, 0, targetCr.Id, 0, cr.ParamBase[ ST_LTP_SEQUENCE_WAIT ] );					
 			return true; 
 		}
 		
@@ -2436,6 +2443,17 @@ bool critter_use_skill( Critter& cr, int skill, Critter@ targetCr, Item@ targetI
 				{
 					CrimeLog( cr, crInfo( cr ) + " look into inventory of dead: " + crInfo( targetCr ) + "." );
 					cr.Action( ACTION_PICK_CRITTER, 0, null );
+					cr.SayMsg( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_EMOTE_INSPECTS );
+					
+					if( !inspect_ltp_inited )
+					{
+						inspect_ltp_init();
+					}
+
+					cr.ParamBase[ ST_LTP_SEQUENCE_WAIT ] = 7000;
+					cr.ParamBase[ ST_LTP_SEQUENCE ] = 1;
+					StartProcess( cr, LTP_INSPECT, 0, targetCr.Id, 0, cr.ParamBase[ ST_LTP_SEQUENCE_WAIT ] );					
+					return true; 
 				}
 				else
 				{
@@ -4403,4 +4421,27 @@ void dlg_Smoke( Critter& targetCr, uint answerI, string& answerS )
 	return; 
 }
 
+void inspect_ltp_init()
+			{
+				LTPREG( LTP_INSPECT, process_inspect )
+				inspect_ltp_inited = true;
+			}
+			
+uint process_inspect( Critter@ cr, int& param0, int& param1, int& param2 )
+{
+    LTPROCESSD( LTP_INSPECT )
+
+	if( param0 == 0 )
+	{
+		param0 ++;
+		return cr.ParamBase[ ST_LTP_SEQUENCE_WAIT ];
+	}
+	else
+    {
+		Critter@ targetCr = GetCritter( param1 );
+		ShowContainer( cr, targetCr, TRANSFER_CRIT_LOOT );	
+	}
+	
+	return 0;
+}
 #endif //__MAIN_MODULE__

@@ -49,6 +49,7 @@ funcdef uint PROCESS( Critter@, int&, int&, int& );
 # define LTP_CHOP_ITEM  	( 38 ) // progress bar: done
 # define LTP_DEVOUR		  	( 39 ) // progress bar: done
 # define LTP_VOMIT		  	( 40 ) // progress bar: done
+# define LTP_INSPECT		( 41 ) // progress bar: done
 
 import bool RegisterProcess( uint8 type, any func ) from "ltp";
 
