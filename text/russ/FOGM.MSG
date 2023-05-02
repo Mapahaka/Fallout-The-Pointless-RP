@@ -766,10 +766,10 @@
 ##### VaultCity ####
 
 # Area 113, Map 211
-{2120}{}{vcity_big}
-{2125}{}{22vcity.ogg}
-{2126}{}{animal1:10, animal:10, water:10, water1:10, pebble:25, pebble1:15, ore:10, ore1:10}
-{2128}{}{Город-Убежища}
+#{2120}{}{vcity_big}
+#{2125}{}{22vcity.ogg}
+#{2126}{}{animal1:10, animal:10, water:10, water1:10, pebble:25, pebble1:15, ore:10, ore1:10}
+#{2128}{}{Город-Убежища}
 
 ##### Frisco ####
 
