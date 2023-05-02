@@ -22263,24 +22263,18 @@ MapObjType           1
 ProtoId              189
 MapX                 235
 MapY                 154
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            59
 
 MapObjType           1
 ProtoId              44
 MapX                 235
 MapY                 165
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            60
 
 MapObjType           1
 ProtoId              189
 MapX                 215
 MapY                 149
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            57
 
 MapObjType           2
@@ -22602,8 +22596,6 @@ MapObjType           1
 ProtoId              139
 MapX                 226
 MapY                 127
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            4
 
 MapObjType           2
@@ -23500,8 +23492,6 @@ MapObjType           1
 ProtoId              184
 MapX                 156
 MapY                 116
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            58
 
 MapObjType           2
@@ -24583,8 +24573,6 @@ MapObjType           1
 ProtoId              138
 MapX                 172
 MapY                 149
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            65
 
 MapObjType           2
@@ -24726,8 +24714,6 @@ MapObjType           1
 ProtoId              138
 MapX                 174
 MapY                 149
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            9
 
 MapObjType           2
@@ -25807,8 +25793,6 @@ MapObjType           1
 ProtoId              128
 MapX                 191
 MapY                 144
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            62
 
 MapObjType           2
@@ -26052,8 +26036,6 @@ MapObjType           1
 ProtoId              128
 MapX                 195
 MapY                 144
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            66
 
 MapObjType           2
@@ -26357,8 +26339,6 @@ MapObjType           1
 ProtoId              128
 MapX                 199
 MapY                 144
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            62
 
 MapObjType           2
@@ -27155,8 +27135,6 @@ MapObjType           1
 ProtoId              139
 MapX                 80
 MapY                 178
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            66
 
 MapObjType           2
@@ -27173,8 +27151,6 @@ MapObjType           1
 ProtoId              139
 MapX                 80
 MapY                 180
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            65
 
 MapObjType           2
@@ -27381,8 +27357,6 @@ MapObjType           1
 ProtoId              900
 MapX                 87
 MapY                 168
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            5
 
 MapObjType           2
@@ -30325,8 +30299,6 @@ MapObjType           1
 ProtoId              139
 MapX                 136
 MapY                 196
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            4
 
 MapObjType           2
@@ -30779,8 +30751,6 @@ MapObjType           1
 ProtoId              189
 MapX                 143
 MapY                 181
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            60
 
 MapObjType           2
@@ -30865,8 +30835,6 @@ MapObjType           1
 ProtoId              139
 MapX                 144
 MapY                 196
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            59
 
 MapObjType           2
@@ -31453,8 +31421,6 @@ MapObjType           1
 ProtoId              139
 MapX                 152
 MapY                 196
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            58
 
 MapObjType           2
@@ -31941,8 +31907,6 @@ MapObjType           1
 ProtoId              139
 MapX                 160
 MapY                 196
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            60
 
 MapObjType           2
@@ -32707,8 +32671,6 @@ MapObjType           1
 ProtoId              179
 MapX                 172
 MapY                 176
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            7
 
 MapObjType           2
