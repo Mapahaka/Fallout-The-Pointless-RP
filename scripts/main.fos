@@ -2078,7 +2078,7 @@ bool critter_use_skill( Critter& cr, int skill, Critter@ targetCr, Item@ targetI
 				inspect_ltp_init();
 			}
 
-			cr.ParamBase[ ST_LTP_SEQUENCE_WAIT ] = 7000;
+			cr.ParamBase[ ST_LTP_SEQUENCE_WAIT ] = 6000;
 			cr.ParamBase[ ST_LTP_SEQUENCE ] = 1;
 			StartProcess( cr, LTP_INSPECT, 0, targetCr.Id, 0, cr.ParamBase[ ST_LTP_SEQUENCE_WAIT ] );					
 			return true; 
