@@ -28821,8 +28821,6 @@ MapObjType           1
 ProtoId              177
 MapX                 92
 MapY                 193
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            1
 
 MapObjType           2
@@ -31311,8 +31309,6 @@ MapObjType           1
 ProtoId              3170
 MapX                 109
 MapY                 181
-ScriptName           multihex
-FuncName             _Init
 
 MapObjType           2
 ProtoId              6262

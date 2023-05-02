@@ -85051,8 +85051,6 @@ MapObjType           1
 ProtoId              139
 MapX                 200
 MapY                 61
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            3
 
 MapObjType           2
@@ -85140,8 +85138,6 @@ ProtoId              64
 MapX                 207
 MapY                 61
 UID                  1
-ScriptName           item_spawner_container
-FuncName             item_init
 Item_Val4            3
 
 MapObjType           1
