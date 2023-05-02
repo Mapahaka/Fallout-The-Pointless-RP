@@ -4,8 +4,6 @@ MaxHexX              400
 MaxHexY              400
 WorkHexX             154
 WorkHexY             121
-ScriptModule         banditCave
-ScriptFunc           _MapInit
 NoLogOut             0
 Time                 -1
 DayTime              300  600  1200 1440
