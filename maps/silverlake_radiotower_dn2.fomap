@@ -32047,8 +32047,6 @@ MapObjType           1
 ProtoId              250
 MapX                 98
 MapY                 186
-ScriptName           spawner_pve
-FuncName             init_low
 
 MapObjType           2
 ProtoId              2839

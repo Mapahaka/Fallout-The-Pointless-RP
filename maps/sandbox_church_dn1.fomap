@@ -27307,8 +27307,6 @@ MapObjType           1
 ProtoId              502
 MapX                 85
 MapY                 169
-ScriptName           spawner_pve
-FuncName             init_high
 
 MapObjType           2
 ProtoId              2141
@@ -28511,8 +28509,6 @@ MapObjType           1
 ProtoId              250
 MapX                 111
 MapY                 174
-ScriptName           spawner_pve
-FuncName             init_high
 
 MapObjType           2
 ProtoId              5670
