@@ -77,6 +77,8 @@ import bool UseShovel( Critter& cr, Item& item ) from "qmap_farm";
 
 import NpcNamesHolder@ getNpcNamesHolder() from "npc_names_holder";
 
+import void tele( Critter& player, int LocPid, int MapIndex, int skipCount = 0 ) from "gm_commands";
+
 // //////////////////////////////////////////////////////////////////////////////////////////////////
 // Called before world generation.
 void init()
@@ -1450,6 +1452,13 @@ bool critter_use_item( Critter& cr, Item& item, Critter@ targetCr, Item@ targetI
         cr.SayMsg( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_COSMETIC_USE );
         return true;
     }
+	//Caravan map	
+	if( pid == PID_MAP && valid( targetCr ) ) //WIP
+	{	
+		CaravanFollow( cr, map, cr.HexX, cr.HexY, 8 );	
+		return true;
+	}
+	
 	// Fires
 	if( ( ( pid == PID_LIGHTER || pid == PID_FLINT ) && valid( targetItem ) && targetItem.GetProtoId() == PID_CHOPPED_FIREWOOD ) )
 	{
@@ -4417,6 +4426,31 @@ void dlg_Smoke( Critter& targetCr, uint answerI, string& answerS )
 				SmokeCigar ( targetCr, cig_type);
 			}			
 		}	
+	}
+	return; 
+}
+
+void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius )
+{		
+	Critter@[] crs;
+	x = targetCr.HexX;
+	y = targetCr.HexY;
+	uint count = map.GetCrittersHex( x, y, radius, FIND_ALL | FIND_ONLY_PLAYERS, crs );
+	for( uint i = 0; i < count; i++ )
+	{		
+		crs[i].ShowScreen( SCREEN_DIALOGBOX, 1, "dlg_caravan" );
+		crs[i].SayMsg( SAY_DIALOGBOX_TEXT, TEXTMSG_TEXT, STR_CARAVAN_OFFER );
+		crs[i].SayMsg( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
+	}
+}
+
+void dlg_caravan( Critter& targetCr, uint answerI, string& answerS )
+{	
+	if( answerI == 0 )
+	{			
+		Map @ map = targetCr.GetMap();			
+		map.SetTextMsg( targetCr.HexX, targetCr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );	
+		tele( targetCr, 8, 0, 0 ); // test area, WIP
 	}
 	return; 
 }

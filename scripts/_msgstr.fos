@@ -18,6 +18,9 @@
 #define STR_IGN_LIGHT               		 ( 536 )
 #define STR_IGN_OFFER               		 ( 537 )
 
+
+#define STR_CARAVAN_OFFER					 ( 600 )
+#define STR_CARAVAN_START					 ( 601 )
 #define STR_TOOL_BROKEN						 ( 700 )
 
 // General interactive machines
