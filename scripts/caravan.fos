@@ -35,52 +35,98 @@ void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius 
 		crs[i].SayMsg( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
 	}
 }
+//		uint16 pos_x = caravan_Cr.HexX-(10*Random( 1, 5 ));
+//		uint16 pos_y = caravan_Cr.HexY-(1*Random( -10, -5 ));
+//(pos_x+Random( -5, 5 )), (pos_y+Random( -10, -5 ))
+
 
 void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 {	
 	if( answerI == 0 )
 	{			
 		Map @ map = caravan_Cr.GetMap();				
-		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );	
-		tele( caravan_Cr, 8, 0, 0 ); // test area, WIP
-		Map @ map_enc = caravan_Cr.GetMap();			
-		uint16 pos_x = caravan_Cr.HexX-(10*Random( 1, 5 ));
-		uint16 pos_y = caravan_Cr.HexY-(1*Random( -10, -5 ));
-		int pid;
-		int tough = Random( 0, 5 );
-		int population = Random( 0, 3 );
-		int aggressive = Random( 0, 1 );;
-		int type = Random( 1, 4 );
-		int rare;
-		for( int i = 0, iend = population; i < iend; i++)
+		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );
+		uint16 LocPid = 72;
+		uint16 prep_location_id = 72;
+		uint16 first_location_id = 74;
+		uint16 second_location_id = 77;
+		uint16 last_location_id = 83;		
+		enc_loc_swich(caravan_Cr, LocPid, 0, first_location_id, second_location_id, last_location_id, prep_location_id, 0 );
+		
+		
+		
+	}
+	return; 
+}
+
+void enc_loc_swich( Critter& caravan_Cr, uint16 LocPid, int MapIndex, uint16 f_loc, uint16 s_loc, uint16 l_loc, uint16 prep_loc, int skipCount = 0 )
+{		
+		
+		for( int i_st = 1, i_end = 4; i_st <= i_end; i_st++)
 		{
-				
+			switch( i_st )
+			{
+				case( 1 ): 
+					LocPid = l_loc; //83last_loc - motel
+					break;
+				case( 2 ): 
+					LocPid = s_loc; //77mid_loc - crossroad
+					break;
+				case( 3 ): 
+					LocPid = f_loc; //74first_loc - canyon
+					break;
+				case( 4 ): 
+					LocPid = prep_loc; //prep loc 72
+					tele( caravan_Cr, LocPid, 0, 0 ); // test area, WIP 					
+					break;
+			}		 
+			Location@ loc = GetLocationByPid( LocPid, skipCount );	
+			Map@ map_enc = loc.GetMapByIndex( MapIndex );
+			int mobType = Random( 1, 4 );
+			int mobCarav = Random( caravan_Cr.ParamBase[ ST_LUCK ], 11 );			
+			enc_loc_population (map_enc, mobType, mobCarav );						
+		}
+}		
+void enc_loc_population(Map& map_enc, int type, int rare)
+{
+	int pid;
+	int population = Random( 0, 8 );
+	int aggressive;
+	for( int ii = 0, iiend = population; ii < iiend; ii++)
+		{				
 			switch( type )
 			{				
-				case( 4 ): //human
-					rare = Random( caravan_Cr.ParamBase[ ST_LUCK ], 11 );
+				case( 4 ): //human					
 					if ( rare >=9 )
 					{
-						population = Random( 3, 7 );
 						pid = Random(1780, 1780);
 						aggressive = 0;
 					}
 					else
 					{
+						population--;
+						aggressive = Random( 0, 1 );
 						pid = Random(1720, 1725);
 					}
 					break;
 				case( 3 ): // ghoul
+					population--;
+					aggressive = Random( 0, 1 );
 					pid = Random(1840, 1845);
 					break;							
 				case( 2 ): // mutant
+					population-=2;
 					pid = Random(1870, 1875);
 					break;
 				case( 1 ): // animal
+					population--;
+					aggressive = Random( 0, 1 );
 					pid = Random(1060, 1062);
 					break;
 			}	
-			Critter@ cr= map_enc.AddNpc( pid, (pos_x+Random( -5, 5 )), (pos_y+Random( -10, -5 )), Random( 0, 5 ), null, null, "mob@_MobInit" );
+			uint16 pos_x = 190-(10*Random( 1, 5 ));
+			uint16 pos_y = 199-(1*Random( -10, -5 ));
+			Critter@ cr= map_enc.AddNpc( pid, pos_x, pos_y, Random( 0, 5 ), null, null, "mob@_MobInit" );
 			if( valid( cr ) )
 			{			
 				switch( type )
@@ -114,11 +160,9 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 						cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
 						cr.StatBase[ ST_TEAM_ID ] = 100+type+aggressive;
 						break;
-				}				
+				}	
 				
-				
-		
-				int bonus_hp = 10 * tough;				
+				int bonus_hp = 10 * Random( 0, 5 );				
 		
 				cr.StatBase[ ST_AI_ID ] = 207;
 				cr.ParamBase[ MERC_TYPE ] = 10;        
@@ -134,8 +178,8 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 				
 			}
 		}			
-	}
-	return; 
+	
 }
+	
 
 #endif // caravan
