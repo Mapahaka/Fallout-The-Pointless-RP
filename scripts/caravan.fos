@@ -91,9 +91,40 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 			Critter@ cr= map_enc.AddNpc( pid, (pos_x+Random( -5, 5 )), (pos_y+Random( -10, -5 )), Random( 0, 5 ), null, null, "mob@_MobInit" );
 			if( valid( cr ) )
 			{			
-				if ( rare >=9 && type == 4 ) cr.ParamBase[ ST_FACTION ] = GetStrHash( "peace" );;
-				cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
-				cr.StatBase[ ST_TEAM_ID ] = 100+type;
+				switch( type )
+				{				
+					case( 4 ): //human
+						if (rare >=9)
+						{
+							cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_carav" );
+							cr.ParamBase[ CR_IS_AGGRESSIVE ] = 0;
+							cr.StatBase[ ST_TEAM_ID ] = 200+type;
+						}
+						else 
+						{
+							cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_raiders" );
+							cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
+							cr.StatBase[ ST_TEAM_ID ] = 100+type;
+						}
+						break;
+					case( 3 ): // ghoul
+						cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_ghouls" );
+						cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
+						cr.StatBase[ ST_TEAM_ID ] = 100+type;
+						break;							
+					case( 2 ): // mutant
+						cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_muts" );
+						cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
+						cr.StatBase[ ST_TEAM_ID ] = 100+type;
+						break;
+					case( 1 ): // animal
+						cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_creeps" );
+						cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
+						cr.StatBase[ ST_TEAM_ID ] = 100+type+aggressive;
+						break;
+				}				
+				
+				
 		
 				int bonus_hp = 10 * tough;				
 		
