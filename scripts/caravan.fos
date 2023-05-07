@@ -1,0 +1,118 @@
+#ifndef CARAVAN
+#define CARAVAN
+
+#include "_utils.fos"
+#include "_ai.fos"
+#include "caravan_h.fos"
+#include "gm_h.fos"
+#include "entire_h.fos"
+#include "local_population_h.fos"
+
+#include "npc_names_holder_h.fos"
+#include "globalmap_group_h.fos"
+#include "npc_planes_h.fos"
+#include "Fractions.fosh"
+#include "critter_status_h.fos"
+#include "_npc_pids.fos"
+
+
+import void tele( Critter& player, int LocPid, int MapIndex, int skipCount = 0 ) from "gm_commands";
+import void AddNpc( Critter& critter, int x, int y, int pid ) from "factions";
+import void GM_GuardsInit( Critter& npc ) from "ai_guards";
+import void GM_MobInit( Critter& npc ) from "mob";
+import void _MobInit( Critter& npc, bool firstTime ) from "mob";
+
+void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius )
+{		
+	Critter@[] crs;
+	x = targetCr.HexX;
+	y = targetCr.HexY;
+	uint count = map.GetCrittersHex( x, y, radius, FIND_ALL | FIND_ONLY_PLAYERS, crs );
+	for( uint i = 0; i < count; i++ )
+	{		
+		crs[i].ShowScreen( SCREEN_DIALOGBOX, 1, "dlg_caravan" );
+		crs[i].SayMsg( SAY_DIALOGBOX_TEXT, TEXTMSG_TEXT, STR_CARAVAN_OFFER );
+		crs[i].SayMsg( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
+	}
+}
+
+void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
+{	
+	if( answerI == 0 )
+	{			
+		Map @ map = caravan_Cr.GetMap();				
+		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );	
+		tele( caravan_Cr, 8, 0, 0 ); // test area, WIP
+		Map @ map_enc = caravan_Cr.GetMap();			
+		uint16 pos_x = caravan_Cr.HexX-(10*Random( 1, 5 ));
+		uint16 pos_y = caravan_Cr.HexY-(1*Random( -10, -5 ));
+		int pid;
+		int tough = Random( 0, 5 );
+		caravan_Cr.Say((11),"|0x999900 Tough |0xcc3300 "+tough+" |0x999900 rolled.");		
+		int population = Random( 0, 3 );
+		int aggressive = Random( 0, 1 );;
+		caravan_Cr.Say((11),"|0x999900 Population |0xcc3300 "+population+" |0x999900 rolled.");
+		int type = Random( 1, 4 );
+		int rare;
+		for( int i = 0, iend = population; i < iend; i++)
+		{
+				
+			switch( type )
+			{				
+				case( 4 ): //human
+					rare = Random( caravan_Cr.ParamBase[ ST_LUCK ], 11 );
+					if ( rare >=9 )
+					{
+						caravan_Cr.Say((11),"|0x999900 WOW! rare |0xcc3300 "+rare+" |0x999900 rolled.");
+						population = Random( 3, 7 );
+						pid = Random(1780, 1780);
+						aggressive = 0;
+					}
+					else
+					{
+						pid = Random(1720, 1725);
+						caravan_Cr.Say((11),"|0x999900 Human type PID |0xcc3300 "+pid+" |0x999900 rolled.");
+					}
+					break;
+				case( 3 ): // ghoul
+					pid = Random(1840, 1845);
+					caravan_Cr.Say((11),"|0x999900 Ghoul type PID |0xcc3300 "+pid+" |0x999900 rolled.");
+					break;							
+				case( 2 ): // mutant
+					pid = Random(1870, 1875);
+					caravan_Cr.Say((11),"|0x999900 Mutant type PID |0xcc3300 "+pid+" |0x999900 rolled.");
+					break;
+				case( 1 ): // animal
+					pid = Random(1060, 1062);
+					caravan_Cr.Say((11),"|0x999900 Animal type PID |0xcc3300 "+pid+" |0x999900 rolled.");
+					break;
+			}	
+			caravan_Cr.Say((11),"|0x999900 Mob_Pid |0xcc3300 "+pid+" |0x999900 rolled.");
+			Critter@ cr= map_enc.AddNpc( pid, (pos_x+Random( -5, 5 )), (pos_y+Random( -10, -5 )), Random( 0, 5 ), null, null, "mob@_MobInit" );
+			if( valid( cr ) )
+			{			
+				if ( rare >=9 && type == 4 ) cr.ParamBase[ ST_FACTION ] = GetStrHash( "peace" );;
+				cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
+				cr.StatBase[ ST_TEAM_ID ] = 100+type;
+		
+				int bonus_hp = 10 * tough;				
+		
+				cr.StatBase[ ST_AI_ID ] = 207;
+				cr.ParamBase[ MERC_TYPE ] = 10;        
+				cr.ModeBase[ MODE_NO_HOME ] = 0;
+				cr.ModeBase[ MODE_NO_LOOT ] = 1;
+				cr.ModeBase[ MODE_NO_STEAL ] = 1;
+				cr.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
+
+				cr.ParamBase[ ST_MAX_LIFE ] = cr.ParamBase[ ST_MAX_LIFE ] + bonus_hp;
+				cr.StatBase[ ST_CURRENT_HP ] = cr.Stat[ ST_MAX_LIFE ];
+			//	GM_MobInit( cr );						
+				GM_GuardsInit( cr );
+				
+			}
+		}			
+	}
+	return; 
+}
+
+#endif // caravan
