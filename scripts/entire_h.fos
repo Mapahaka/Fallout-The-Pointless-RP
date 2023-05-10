@@ -80,4 +80,7 @@
 // 2000 - 2010 - reserved for laser fences
 #define ENTIRE_LASER_FENCE_END       ( 2010 )
 
+//========CARAVAN_ENTIRE===========//
+#define CARAVAN_ENC_SPAWN			( 3000 )  	// Caravan encounters spawn point
+
 #endif // ENTIRE_H

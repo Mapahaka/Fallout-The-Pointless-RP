@@ -44,7 +44,7 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 		Map @ map = caravan_Cr.GetMap();				
 		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );
 		uint16 LocPid = caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ];					
-		TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
+		TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );		
 		enc_loc_swich(caravan_Cr, LocPid, 0, 0 );		
 	}
 	return; 
@@ -127,8 +127,16 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 					pid = Random(1060, 1062);
 					break;
 			}	
-			uint16 pos_x = 190-(10*Random( 1, 5 ));
-			uint16 pos_y = 199-(1*Random( -10, -5 ));
+			
+			int entires = map_enc.CountEntire( CARAVAN_ENC_SPAWN );
+			if( entires > 0 )		
+			{
+				uint16 hx = 0, hy = 0;			
+				map_enc.GetEntireCoords( CARAVAN_ENC_SPAWN, Random( 0, entires - 1 ), hx, hy );
+				uint16 pos_x = hx-(2*Random( 1, 5 ));
+				uint16 pos_y = hy-(1*Random( -10, -5 ));
+			
+			
 			Critter@ cr= map_enc.AddNpc( pid, pos_x, pos_y, Random( 0, 5 ), null, null, "mob@_MobInit" );
 			if( valid( cr ) )
 			{			
@@ -179,6 +187,7 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 			//	GM_MobInit( cr );						
 				GM_GuardsInit( cr );
 				
+			}
 			}
 		}			
 	
