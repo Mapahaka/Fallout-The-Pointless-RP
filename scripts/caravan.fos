@@ -46,7 +46,7 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );
 		uint16 LocPid = caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ];	
 		int w_dir = caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ];		
-		if (Travel_Dir == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
+		if (caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ] == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
 		else TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]+6), 0, 227 );
 		enc_loc_swich(caravan_Cr, LocPid, 0, 0 );		
 	}
