@@ -2,7 +2,7 @@
 #define CARAVAN_H
 
 	#ifndef CARAVAN
-		import void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius ) from "caravan";		
+		import void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius, uint16 way_dir ) from "caravan";		
 		
 	#endif //CARAVAN
 

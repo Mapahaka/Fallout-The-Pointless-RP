@@ -16053,3 +16053,19 @@ Volume=1
 SoundId=48
 Cost=100
 Material=15
+
+
+[Proto] # PID_CARAVAN_SIGN
+ProtoId=23816
+Type=5
+PicMap=art\scenery\radsign1.frm
+PicInv=art\scenery\radsign1.frm
+Flags=36888
+DisableEgg=1
+Stackable=0
+Weight=500
+Volume=1
+SoundId=48
+Cost=5
+Material=1
+StartValue_0=0

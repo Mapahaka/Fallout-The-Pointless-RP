@@ -16,13 +16,13 @@
 #include "_npc_pids.fos"
 
 
-import void tele( Critter& player, int LocPid, int MapIndex, int skipCount = 0 ) from "gm_commands";
+import bool TransitToLoc(Critter&cr,uint16 locPid,uint mapIndex,uint entranceNum)from"stdlib";
 import void AddNpc( Critter& critter, int x, int y, int pid ) from "factions";
 import void GM_GuardsInit( Critter& npc ) from "ai_guards";
 import void GM_MobInit( Critter& npc ) from "mob";
 import void _MobInit( Critter& npc, bool firstTime ) from "mob";
 
-void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius )
+void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius, uint16 way_dir )
 {		
 	Critter@[] crs;
 	x = targetCr.HexX;
@@ -30,67 +30,74 @@ void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius 
 	uint count = map.GetCrittersHex( x, y, radius, FIND_ALL | FIND_ONLY_PLAYERS, crs );
 	for( uint i = 0; i < count; i++ )
 	{		
+		crs[i].StatBase[ CR_CARAVAN_DIST_ID ] = way_dir;
 		crs[i].ShowScreen( SCREEN_DIALOGBOX, 1, "dlg_caravan" );
 		crs[i].SayMsg( SAY_DIALOGBOX_TEXT, TEXTMSG_TEXT, STR_CARAVAN_OFFER );
 		crs[i].SayMsg( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
 	}
 }
-//		uint16 pos_x = caravan_Cr.HexX-(10*Random( 1, 5 ));
-//		uint16 pos_y = caravan_Cr.HexY-(1*Random( -10, -5 ));
-//(pos_x+Random( -5, 5 )), (pos_y+Random( -10, -5 ))
-
 
 void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 {	
-	if( answerI == 0 )
-	{			
+	if( answerI == 0 )	{			
+		
 		Map @ map = caravan_Cr.GetMap();				
 		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );
-		uint16 LocPid = 72;
-		uint16 prep_location_id = 72;
-		uint16 first_location_id = 74;
-		uint16 second_location_id = 77;
-		uint16 last_location_id = 83;		
-		enc_loc_swich(caravan_Cr, LocPid, 0, first_location_id, second_location_id, last_location_id, prep_location_id, 0 );
-		
-		
-		
+		uint16 LocPid = caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ];					
+		TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
+		enc_loc_swich(caravan_Cr, LocPid, 0, 0 );		
 	}
 	return; 
 }
 
-void enc_loc_swich( Critter& caravan_Cr, uint16 LocPid, int MapIndex, uint16 f_loc, uint16 s_loc, uint16 l_loc, uint16 prep_loc, int skipCount = 0 )
-{		
-		
-		for( int i_st = 1, i_end = 4; i_st <= i_end; i_st++)
+void enc_loc_swich( Critter& caravan_Cr, uint16 LocP, int MapIndex, int skipCount )
+{				
+		uint16 MapPid;
+		for( int i_st = 1, i_end = 3; i_st <= i_end; i_st++)
 		{
 			switch( i_st )
 			{
-				case( 1 ): 
-					LocPid = l_loc; //83last_loc - motel
+				case( 1 ):					
+					MapPid = LocP+10; //83last_loc - motel
 					break;
 				case( 2 ): 
-					LocPid = s_loc; //77mid_loc - crossroad
+					MapPid = LocP+5; //77mid_loc - crossroad
 					break;
 				case( 3 ): 
-					LocPid = f_loc; //74first_loc - canyon
-					break;
-				case( 4 ): 
-					LocPid = prep_loc; //prep loc 72
-					tele( caravan_Cr, LocPid, 0, 0 ); // test area, WIP 					
-					break;
+					MapPid = LocP+2; //74first_loc - canyon
+					break;				
 			}		 
-			Location@ loc = GetLocationByPid( LocPid, skipCount );	
-			Map@ map_enc = loc.GetMapByIndex( MapIndex );
-			int mobType = Random( 1, 4 );
-			int mobCarav = Random( caravan_Cr.ParamBase[ ST_LUCK ], 11 );			
-			enc_loc_population (map_enc, mobType, mobCarav );						
+			Location@ loc = GetLocationByPid( MapPid, skipCount );
+			Map@ map_enc = loc.GetMapByIndex( MapIndex );			
+			enc_loc_population (map_enc, Random( 1, 4 ), Random( caravan_Cr.ParamBase[ ST_LUCK ], 11 ) );						
 		}
 }		
 void enc_loc_population(Map& map_enc, int type, int rare)
 {
 	int pid;
-	int population = Random( 0, 8 );
+	int population;
+	switch( type )
+			{				
+				case( 4 ): //human					
+					if ( rare >=9 )
+					{						
+						population = Random( 3, 7 );
+					}
+					else
+					{
+						population = Random( 0, 3 );
+					}
+					break;
+				case( 3 ): // ghoul
+					population = Random( 2, 5 );
+					break;							
+				case( 2 ): // mutant
+					population = Random( 0, 3 );
+					break;
+				case( 1 ): // animal
+					population = Random( 3, 8 );
+					break;
+			}	
 	int aggressive;
 	for( int ii = 0, iiend = population; ii < iiend; ii++)
 		{				
@@ -104,22 +111,18 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 					}
 					else
 					{
-						population--;
 						aggressive = Random( 0, 1 );
 						pid = Random(1720, 1725);
 					}
 					break;
 				case( 3 ): // ghoul
-					population--;
 					aggressive = Random( 0, 1 );
 					pid = Random(1840, 1845);
 					break;							
 				case( 2 ): // mutant
-					population-=2;
 					pid = Random(1870, 1875);
 					break;
 				case( 1 ): // animal
-					population--;
 					aggressive = Random( 0, 1 );
 					pid = Random(1060, 1062);
 					break;
