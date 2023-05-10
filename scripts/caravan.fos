@@ -43,12 +43,11 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 	if( answerI == 0 )	{			
 		
 		Map @ map = caravan_Cr.GetMap();				
-		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );
-		uint16 LocPid = caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ];	
+		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );		
 		int w_dir = caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ];		
 		if (caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ] == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
 		else TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]+6), 0, 227 );
-		enc_loc_swich(caravan_Cr, LocPid, 0, 0 );		
+		enc_loc_swich(caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 0 );		
 	}
 	return; 
 }
@@ -61,13 +60,13 @@ void enc_loc_swich( Critter& caravan_Cr, uint16 LocP, int MapIndex, int skipCoun
 			switch( i_st )
 			{
 				case( 1 ):					
-					MapPid = LocP+10; //83last_loc - motel
+					MapPid = LocP+10; //82last_loc - лес
 					break;
 				case( 2 ): 
-					MapPid = LocP+5; //77mid_loc - crossroad
+					MapPid = LocP+5; //77mid_loc - мотель
 					break;
 				case( 3 ): 
-					MapPid = LocP+2; //74first_loc - canyon
+					MapPid = LocP+2; //74first_loc - перекрёсток
 					break;				
 			}		 
 			Location@ loc = GetLocationByPid( MapPid, skipCount );
@@ -183,8 +182,8 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 				cr.ParamBase[ MERC_TYPE ] = 10;        
 				cr.ModeBase[ MODE_NO_HOME ] = 0;
 			//	cr.ModeBase[ MODE_NO_LOOT ] = 1;
-				cr.ModeBase[ MODE_NO_STEAL ] = 1;
-				cr.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
+			//	cr.ModeBase[ MODE_NO_STEAL ] = 1;
+			//	cr.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
 
 				cr.ParamBase[ ST_MAX_LIFE ] = cr.ParamBase[ ST_MAX_LIFE ] + bonus_hp;
 				cr.StatBase[ ST_CURRENT_HP ] = cr.Stat[ ST_MAX_LIFE ];
