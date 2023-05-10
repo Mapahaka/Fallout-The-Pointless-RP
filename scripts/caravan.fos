@@ -136,8 +136,9 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 				uint16 pos_x = hx-(2*Random( 1, 5 ));
 				uint16 pos_y = hy-(1*Random( -10, -5 ));
 			
+			Critter@ cr= map_enc.AddNpc( Random(2454, 2473), pos_x, pos_y, Random( 0, 5 ), null, null, "ai_guards@_AiGuardsInit" );
+		//	Critter@ cr= map_enc.AddNpc( pid, pos_x, pos_y, Random( 0, 5 ), null, null, "ai_guards@_AiGuardsInit" );
 			
-			Critter@ cr= map_enc.AddNpc( pid, pos_x, pos_y, Random( 0, 5 ), null, null, "mob@_MobInit" );
 			if( valid( cr ) )
 			{			
 				switch( type )
@@ -155,7 +156,7 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 							cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
 							cr.StatBase[ ST_TEAM_ID ] = 100+type;
 						}
-						break;
+						break;						
 					case( 3 ): // ghoul
 						cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_ghouls" );
 						cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
@@ -178,7 +179,7 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 				cr.StatBase[ ST_AI_ID ] = 207;
 				cr.ParamBase[ MERC_TYPE ] = 10;        
 				cr.ModeBase[ MODE_NO_HOME ] = 0;
-				cr.ModeBase[ MODE_NO_LOOT ] = 1;
+			//	cr.ModeBase[ MODE_NO_LOOT ] = 1;
 				cr.ModeBase[ MODE_NO_STEAL ] = 1;
 				cr.ModeBase[ MODE_UNLIMITED_AMMO ] = 1;
 
