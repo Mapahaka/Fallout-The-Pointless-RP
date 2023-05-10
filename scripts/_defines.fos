@@ -1192,6 +1192,7 @@
 #define CR_MINING_EXHAUSTION_MAX					#(skill)	( 40 + 60 * ( skill ) / 600 )
 #define CR_MINING_EXHAUSTION_TICK					#(skill)	( ( 24 * 60 ) / CR_MINING_EXHAUSTION_MAX( skill ) )
 #define CR_CARAVAN_DIST_ID							( 2 )
+#define CR_CARAVAN_DIRECTION						( 0 )
 
 // Planes types
 #define AI_PLANE_MISC                            	( 0 )

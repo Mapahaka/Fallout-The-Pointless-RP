@@ -22,7 +22,7 @@ import void GM_GuardsInit( Critter& npc ) from "ai_guards";
 import void GM_MobInit( Critter& npc ) from "mob";
 import void _MobInit( Critter& npc, bool firstTime ) from "mob";
 
-void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius, uint16 way_dir )
+void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius, int way_dir, uint16 way )
 {		
 	Critter@[] crs;
 	x = targetCr.HexX;
@@ -30,7 +30,8 @@ void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius,
 	uint count = map.GetCrittersHex( x, y, radius, FIND_ALL | FIND_ONLY_PLAYERS, crs );
 	for( uint i = 0; i < count; i++ )
 	{		
-		crs[i].StatBase[ CR_CARAVAN_DIST_ID ] = way_dir;
+		crs[i].StatBase[ CR_CARAVAN_DIST_ID ] = way;
+		crs[i].StatBase[ CR_CARAVAN_DIRECTION ] = way_dir;
 		crs[i].ShowScreen( SCREEN_DIALOGBOX, 1, "dlg_caravan" );
 		crs[i].SayMsg( SAY_DIALOGBOX_TEXT, TEXTMSG_TEXT, STR_CARAVAN_OFFER );
 		crs[i].SayMsg( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
@@ -43,8 +44,10 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 		
 		Map @ map = caravan_Cr.GetMap();				
 		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );
-		uint16 LocPid = caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ];					
-		TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );		
+		uint16 LocPid = caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ];	
+		int w_dir = caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ];		
+		if (Travel_Dir == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
+		else TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]+6), 0, 227 );
 		enc_loc_swich(caravan_Cr, LocPid, 0, 0 );		
 	}
 	return; 

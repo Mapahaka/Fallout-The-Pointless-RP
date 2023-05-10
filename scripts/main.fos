@@ -1454,8 +1454,9 @@ bool critter_use_item( Critter& cr, Item& item, Critter@ targetCr, Item@ targetI
 	//Caravan map	
 	if( pid == PID_MAP && valid( targetItem ) && targetItem.GetProtoId() == PID_CARAVAN_SIGN && targetItem.Val0 > 0 ) //WIP
 	{			
-		uint16 waypoint = targetItem.Val0;		
-		CaravanFollow( cr, map, cr.HexX, cr.HexY, 8, waypoint );		
+		uint16 waypoint = targetItem.Val0;
+		uint16 way_direction = targetItem.Val1;		
+		CaravanFollow( cr, map, cr.HexX, cr.HexY, 8, way_direction, waypoint );		
 		return true;		
 	}
 	
