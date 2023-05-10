@@ -2081,7 +2081,8 @@ bool critter_use_skill( Critter& cr, int skill, Critter@ targetCr, Item@ targetI
 				return false;
 			}
 			cr.SayMsg( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_EMOTE_INSPECTS );
-			cr.Action( ACTION_PICK_CRITTER, 0, null );						
+		//	cr.Action( ACTION_PICK_CRITTER, 0, null );
+			cr.SetAnims( COND_LIFE, 0, ANIM2_CROUCH );
 			
 			if( !inspect_ltp_inited )
 			{
@@ -2452,7 +2453,8 @@ bool critter_use_skill( Critter& cr, int skill, Critter@ targetCr, Item@ targetI
 				else if( targetCr.IsDead() )
 				{
 					CrimeLog( cr, crInfo( cr ) + " look into inventory of dead: " + crInfo( targetCr ) + "." );
-					cr.Action( ACTION_PICK_CRITTER, 0, null );
+				//	cr.Action( ACTION_PICK_CRITTER, 0, null );
+					cr.SetAnims( COND_LIFE, 0, ANIM2_CROUCH );
 					cr.SayMsg( SAY_EMOTE_ON_HEAD, TEXTMSG_TEXT, STR_EMOTE_INSPECTS );
 					
 					if( !inspect_ltp_inited )
