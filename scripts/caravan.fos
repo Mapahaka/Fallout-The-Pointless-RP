@@ -21,6 +21,7 @@ import void AddNpc( Critter& critter, int x, int y, int pid ) from "factions";
 import void GM_GuardsInit( Critter& npc ) from "ai_guards";
 import void GM_MobInit( Critter& npc ) from "mob";
 import void _MobInit( Critter& npc, bool firstTime ) from "mob";
+import uint CountMapPlayers( Map@ map ) from "manager";
 
 void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius, int way_dir, uint16 way )
 {		
@@ -44,10 +45,10 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 		
 		Map @ map = caravan_Cr.GetMap();				
 		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );		
-		int w_dir = caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ];		
-		if (caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ] == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
-		else TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]+6), 0, 227 );
+		int w_dir = caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ];
 		enc_loc_swich(caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 0 );		
+		if (caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ] == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
+		else TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]+6), 0, 227 );				
 	}
 	return; 
 }
@@ -68,10 +69,19 @@ void enc_loc_swich( Critter& caravan_Cr, uint16 LocP, int MapIndex, int skipCoun
 				case( 3 ): 
 					MapPid = LocP+2; //74first_loc - перекрёсток
 					break;				
-			}		 
+			}
+			Critter@[] players;
+			uint16 x = 0, y = 0;
 			Location@ loc = GetLocationByPid( MapPid, skipCount );
-			Map@ map_enc = loc.GetMapByIndex( MapIndex );			
-			enc_loc_population (map_enc, Random( 1, 4 ), Random( caravan_Cr.ParamBase[ ST_LUCK ], 11 ) );						
+			Map@ map_enc = loc.GetMapByIndex( MapIndex );
+			map_enc.GetEntireCoords( ENTIRE_DEFAULT, 0, x, y );
+			uint count_p = map_enc.GetCrittersHex( x, y, 250, FIND_ALL | FIND_ONLY_PLAYERS, players );					
+			if (isTester(caravan_Cr)) caravan_Cr.Say(SAY_NETMSG,"Total " + count_p + " players on the "+MapPid+" map."); //debug info
+			if (count_p < 1)
+			{
+				enc_loc_population (map_enc, Random( 1, 4 ), Random( caravan_Cr.ParamBase[ ST_LUCK ], 11 ) );
+				if (isTester(caravan_Cr)) caravan_Cr.Say(SAY_NETMSG,"NPC spawned at "+MapPid+" map."); //debug info
+			}
 		}
 }		
 void enc_loc_population(Map& map_enc, int type, int rare)
@@ -195,6 +205,5 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 		}			
 	
 }
-	
 
 #endif // caravan
