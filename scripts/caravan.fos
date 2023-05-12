@@ -47,8 +47,8 @@ void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );		
 		int w_dir = caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ];
 		enc_loc_swich(caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 0 );		
-		if (caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ] == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 227 );
-		else TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]+6), 0, 227 );				
+		if (caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ] == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, CARAVAN_ENC_SPAWN );
+		else TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]+6), 0, CARAVAN_ENC_SPAWN );				
 	}
 	return; 
 }
@@ -86,28 +86,32 @@ void enc_loc_swich( Critter& caravan_Cr, uint16 LocP, int MapIndex, int skipCoun
 }		
 void enc_loc_population(Map& map_enc, int type, int rare)
 {
-	int pid;
-	int population;
+	int pid, population, spawnpoint;	
 	switch( type )
 			{				
 				case( 4 ): //human					
 					if ( rare >=9 )
 					{						
 						population = Random( 3, 7 );
+						spawnpoint = 3001;
 					}
 					else
 					{
 						population = Random( 0, 3 );
+						spawnpoint = 3002;
 					}
 					break;
 				case( 3 ): // ghoul
 					population = Random( 2, 5 );
+					spawnpoint = 3003;
 					break;							
 				case( 2 ): // mutant
 					population = Random( 0, 3 );
+					spawnpoint = 3004;
 					break;
 				case( 1 ): // animal
 					population = Random( 3, 8 );
+					spawnpoint = 3005;
 					break;
 			}	
 	int aggressive;
@@ -140,11 +144,11 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 					break;
 			}	
 			
-			int entires = map_enc.CountEntire( CARAVAN_ENC_SPAWN );
+			int entires = map_enc.CountEntire( spawnpoint );
 			if( entires > 0 )		
 			{
 				uint16 hx = 0, hy = 0;			
-				map_enc.GetEntireCoords( CARAVAN_ENC_SPAWN, Random( 0, entires - 1 ), hx, hy );
+				map_enc.GetEntireCoords( spawnpoint, Random( 0, entires - 1 ), hx, hy );
 				uint16 pos_x = hx-(2*Random( 1, 5 ));
 				uint16 pos_y = hy-(1*Random( -10, -5 ));
 			

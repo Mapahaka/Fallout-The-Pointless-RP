@@ -82,5 +82,10 @@
 
 //========CARAVAN_ENTIRE===========//
 #define CARAVAN_ENC_SPAWN			( 3000 )  	// Caravan encounters spawn point
+#define CARAVAN_ENC_SPAWN_C			( 3001 )  	// Caravan encounters spawn point - caravan & patrol
+#define CARAVAN_ENC_SPAWN_R			( 3002 )  	// Caravan encounters spawn point - raiders
+#define CARAVAN_ENC_SPAWN_G			( 3003 )  	// Caravan encounters spawn point - ghouls
+#define CARAVAN_ENC_SPAWN_M			( 3004 )  	// Caravan encounters spawn point - mutants
+#define CARAVAN_ENC_SPAWN_A			( 3005 )  	// Caravan encounters spawn point - animals
 
 #endif // ENTIRE_H
