@@ -31,8 +31,8 @@ void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius,
 	uint count = map.GetCrittersHex( x, y, radius, FIND_ALL | FIND_ONLY_PLAYERS, crs );
 	for( uint i = 0; i < count; i++ )
 	{		
-		crs[i].StatBase[ CR_CARAVAN_DIST_ID ] = way;
-		crs[i].StatBase[ CR_CARAVAN_DIRECTION ] = way_dir;
+		crs[i].ParamBase[ CR_CARAVAN_DIST_ID ] = way;
+		crs[i].ParamBase[ CR_CARAVAN_DIRECTION ] = way_dir;
 		crs[i].ShowScreen( SCREEN_DIALOGBOX, 1, "dlg_caravan" );
 		crs[i].SayMsg( SAY_DIALOGBOX_TEXT, TEXTMSG_TEXT, STR_CARAVAN_OFFER );
 		crs[i].SayMsg( SAY_DIALOGBOX_BUTTON( 0 ), TEXTMSG_TEXT, STR_DLG_AGREE );	
@@ -41,14 +41,14 @@ void CaravanFollow( Critter& targetCr, Map& map, uint16 x, uint16 y, int radius,
 
 void dlg_caravan( Critter& caravan_Cr, uint answerI, string& answerS )
 {	
-	if( answerI == 0 )	{			
-		
+	if( answerI == 0 )	
+	{			
 		Map @ map = caravan_Cr.GetMap();				
 		map.SetTextMsg( caravan_Cr.HexX, caravan_Cr.HexY, COLOR_ENV, TEXTMSG_TEXT, STR_CARAVAN_START );		
-		int w_dir = caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ];
-		enc_loc_swich(caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, 0 );		
-		if (caravan_Cr.StatBase[ CR_CARAVAN_DIRECTION ] == 0) TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]), 0, CARAVAN_ENC_SPAWN );
-		else TransitToLoc( caravan_Cr, (caravan_Cr.StatBase[ CR_CARAVAN_DIST_ID ]+6), 0, CARAVAN_ENC_SPAWN );				
+		int w_dir = caravan_Cr.ParamBase[ CR_CARAVAN_DIRECTION ];
+		enc_loc_swich(caravan_Cr, (caravan_Cr.ParamBase[ CR_CARAVAN_DIST_ID ]), 0, 0 );
+		if (caravan_Cr.ParamBase[ CR_CARAVAN_DIRECTION ] == 0) TransitToLoc( caravan_Cr, (caravan_Cr.ParamBase[ CR_CARAVAN_DIST_ID ]), 0, CARAVAN_ENC_SPAWN );
+		else TransitToLoc( caravan_Cr, (caravan_Cr.ParamBase[ CR_CARAVAN_DIST_ID ]+6), 0, CARAVAN_ENC_SPAWN );				
 	}
 	return; 
 }
@@ -86,7 +86,7 @@ void enc_loc_swich( Critter& caravan_Cr, uint16 LocP, int MapIndex, int skipCoun
 }		
 void enc_loc_population(Map& map_enc, int type, int rare)
 {
-	int pid, population, spawnpoint;	
+	int pid, population, spawnpoint, aggressive;	
 	switch( type )
 			{				
 				case( 4 ): //human					
@@ -113,8 +113,7 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 					population = Random( 3, 8 );
 					spawnpoint = 3005;
 					break;
-			}	
-	int aggressive;
+			}		
 	for( int ii = 0, iiend = population; ii < iiend; ii++)
 		{				
 			switch( type )
@@ -122,24 +121,25 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 				case( 4 ): //human					
 					if ( rare >=9 )
 					{
-						pid = Random(1780, 1780);
-						aggressive = 0;
+						pid = Random(2454, 2457);
+						aggressive = 1;
 					}
 					else
 					{
-						aggressive = Random( 0, 1 );
-						pid = Random(1720, 1725);
+						aggressive = 1;
+						pid = Random(2458, 2473);
 					}
 					break;
 				case( 3 ): // ghoul
-					aggressive = Random( 0, 1 );
+					aggressive = 1;
 					pid = Random(1840, 1845);
 					break;							
 				case( 2 ): // mutant
 					pid = Random(1870, 1875);
+					aggressive = 1;
 					break;
 				case( 1 ): // animal
-					aggressive = Random( 0, 1 );
+					aggressive = 1;
 					pid = Random(1060, 1062);
 					break;
 			}	
@@ -152,8 +152,10 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 				uint16 pos_x = hx-(2*Random( 1, 5 ));
 				uint16 pos_y = hy-(1*Random( -10, -5 ));
 			
-			Critter@ cr= map_enc.AddNpc( Random(2454, 2473), pos_x, pos_y, Random( 0, 5 ), null, null, "ai_guards@_AiGuardsInit" );
-		//	Critter@ cr= map_enc.AddNpc( pid, pos_x, pos_y, Random( 0, 5 ), null, null, "ai_guards@_AiGuardsInit" );
+		//	Critter@ cr= map_enc.AddNpc( Random(2454, 2473), pos_x, pos_y, Random( 0, 5 ), null, null, "ai_guards@_AiGuardsInit" );
+		//								(obj.Pid,posX,posY,reversDir,params,items,obj.ScriptName);
+			Critter@ cr= map_enc.AddNpc( pid, pos_x, pos_y, Random( 0, 5 ), null, null, "mob@_MobInit" );
+		//	Critter@ cr= map_enc.AddNpc( pid, pos_x, pos_y, Random( 0, 5 ), null, null, null );
 			
 			if( valid( cr ) )
 			{			
@@ -163,7 +165,7 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 						if (rare >=9)
 						{
 							cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_carav" );
-							cr.ParamBase[ CR_IS_AGGRESSIVE ] = 0;
+							cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
 							cr.StatBase[ ST_TEAM_ID ] = 200+type;
 						}
 						else 
@@ -172,21 +174,25 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 							cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
 							cr.StatBase[ ST_TEAM_ID ] = 100+type;
 						}
+						GM_GuardsInit( cr );
 						break;						
 					case( 3 ): // ghoul
 						cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_ghouls" );
 						cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
 						cr.StatBase[ ST_TEAM_ID ] = 100+type;
+						GM_MobInit( cr );
 						break;							
 					case( 2 ): // mutant
 						cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_muts" );
 						cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
 						cr.StatBase[ ST_TEAM_ID ] = 100+type;
+						GM_MobInit( cr );
 						break;
 					case( 1 ): // animal
 						cr.ParamBase[ ST_FACTION ] = GetStrHash( "enc_creeps" );
 						cr.ParamBase[ CR_IS_AGGRESSIVE ] = aggressive;
 						cr.StatBase[ ST_TEAM_ID ] = 100+type+aggressive;
+						GM_MobInit( cr );
 						break;
 				}	
 				
@@ -202,7 +208,7 @@ void enc_loc_population(Map& map_enc, int type, int rare)
 				cr.ParamBase[ ST_MAX_LIFE ] = cr.ParamBase[ ST_MAX_LIFE ] + bonus_hp;
 				cr.StatBase[ ST_CURRENT_HP ] = cr.Stat[ ST_MAX_LIFE ];
 			//	GM_MobInit( cr );						
-				GM_GuardsInit( cr );
+			//	GM_GuardsInit( cr );
 				
 			}
 			}

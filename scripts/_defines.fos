@@ -1081,6 +1081,8 @@
 #define CR_WETNESS 									( 772 )		// Drying up passively
 #define CR_WETNESS_SPEED							( 773 )     // Rate of drying up
 
+#define CR_CARAVAN_DIST_ID							( 777 )		// Caravan location flag
+#define CR_CARAVAN_DIRECTION						( 776 )		// Caravan way direction pointer
 
 //770..779
 
@@ -1191,8 +1193,6 @@
 
 #define CR_MINING_EXHAUSTION_MAX					#(skill)	( 40 + 60 * ( skill ) / 600 )
 #define CR_MINING_EXHAUSTION_TICK					#(skill)	( ( 24 * 60 ) / CR_MINING_EXHAUSTION_MAX( skill ) )
-#define CR_CARAVAN_DIST_ID							( 2 )
-#define CR_CARAVAN_DIRECTION						( 0 )
 
 // Planes types
 #define AI_PLANE_MISC                            	( 0 )
