@@ -1452,7 +1452,7 @@ bool critter_use_item( Critter& cr, Item& item, Critter@ targetCr, Item@ targetI
         return true;
     }
 	//Caravan map	
-	if( pid == PID_MAP && valid( targetItem ) && targetItem.GetProtoId() == PID_CARAVAN_SIGN && targetItem.Val0 > 0 ) //WIP
+	if( pid == PID_CARAVAN_MAP && valid( targetItem ) && targetItem.GetProtoId() == PID_CARAVAN_SIGN && targetItem.Val0 > 0 ) //WIP
 	{			
 		uint16 waypoint = targetItem.Val0;
 		uint16 way_direction = targetItem.Val1;		

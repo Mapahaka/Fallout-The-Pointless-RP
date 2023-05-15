@@ -15024,7 +15024,7 @@ SoundId=48
 Cost=40
 Material=1
 
-[Proto] # PID_SON_ITEM25 
+[Proto] # PID_CARAVAN_MAP
 ProtoId=22134
 Type=5
 PicMap=art\items\smalbox2.frm

@@ -2285,6 +2285,7 @@
 #define PID_RADIO                             		( 100 )							// Рация
 #define PID_MEMO                              		( 487 )							// Записка от Френсиса
 #define PID_MAP                               		( 523 )							// Геологическая карта
+#define PID_CARAVAN_MAP                             ( 22134 )						// Карта караванных путей
 
 // Cars
 #define PID_HUMMER                            		( 800 )							// 
