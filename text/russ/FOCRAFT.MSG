@@ -105,6 +105,7 @@
 {1120}{}{PID_KEY_BUNCH@Для связки ключей подойдёт любая проволка или кусок верёвки@@SK_REPAIR 50@PID_CRAFT_M_BARS 1|PID_PART_OF_ROPE 1@@PID_KEY_BUNCH 1@script fix_boy@fix_None}
 {1121}{}{PID_WALLET@Кусок кожи и пара верёвок - файл, папка/портмоне готов!@@SK_REPAIR 50@PID_PART_OF_ROPE 2&PID_CRAFT_L_HIDE 1@@PID_WALLET 1@script fix_boy@fix_Tribal}
 {1122}{}{PID_FIRST_AID_KIT@Вставляем металлические распорки в сумку, что бы её содержимое не сломалось от случайных ударов, и делаем защёлку сверху, что бы ничего не выпало. Походная аптечка готова!@@SK_REPAIR 75@PID_CRAFT_M_BARS 2&PID_BAG 1@PID_WORKBENCH_TOKEN 1@PID_FIRST_AID_KIT 1@script fix_boy@fix_Tribal}
+{1123}{}{PID_TOOL_BELT@Несколько кусков крепкой кожи, ткань, прочная нить и немного терпения.@@@PID_CRAFT_L_HIDE 5&PID_CRAFT_L_RAGS 5&PID_MEDTHREAD 10@PID_SHIV 1&PID_MEDNEEDLE 1@PID_TOOL_BELT 1@script fix_boy@fix_Tribal}
 
 {1150}{}{PID_ZAPLATKA_CRAFT_HEADWEAR@Очки, шляпы и шлемы@@@PID_ZAPLATKA_CRAFT_HEADWEAR 1@@PID_ZAPLATKA_CRAFT_HEADWEAR 1@script fix_boy@fix_Tribal}
 {1151}{}{PID_BALACLAV@Нет ничего проще, чем сшить вместе тряпки, сделать прорези для глаз и рта, и перекрасить изделие в черный цвет.@@SK_OUTDOORSMAN 150|SK_REPAIR 100@PID_CRAFT_L_RAGS 10&PID_COLORS 1@PID_MEDNEEDLE 1&PID_SCISSORS 1@PID_BALACLAV 1@script fix_boy@fix_FreeHands}

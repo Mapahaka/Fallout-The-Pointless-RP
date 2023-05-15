@@ -2073,6 +2073,7 @@
 #define PID_EXP_LOCKPICK_SET                  		( 410 ) 						// Большой набор отмычек (+50 к расчету навыка при взломе)
 #define PID_ELEC_LOCKPICK_MKII                		( 411 ) 						// Электронная отмычка мод. II
 #define PID_CENTRF                            		( 1774 )						// Центрифуга CL 3000
+#define PID_TOOL_BELT 								( 23817 )						// Пояс с инструментами
 
 // Medical
 #define PID_BIO_GEL                           		( 440 ) 						// Биогель		         		//
