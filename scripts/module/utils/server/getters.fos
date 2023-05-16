@@ -451,6 +451,7 @@ shared float ContainerWeightEase( Item@ item )
 			return 0.9;
 		case( PID_WALLET ):
 		case( PID_AMMO_BELT ):
+		case( PID_TOOL_BELT ):
 			return 0.1;
 	}
 	return 1.0;

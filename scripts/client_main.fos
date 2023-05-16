@@ -5984,6 +5984,10 @@ string ContainerWeight( ItemCl& item )
 				weightBonus = 0.1f;
 				bonus = " ( |0xFFFF00 10% |0x3CF800 )";
 				break;
+			case( PID_TOOL_BELT ):
+				weightBonus = 0.1f;
+				bonus = " ( |0xFFFF00 10% |0x3CF800 )";
+				break;
 			default:
 				weightBonus = 1.0f;
 				break;

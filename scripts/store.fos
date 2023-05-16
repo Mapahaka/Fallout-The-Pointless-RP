@@ -266,6 +266,7 @@ const uint[][] itemlist = {
 		PID_FARTEFCT
 	},
 	{	//Tools
+		PID_TOOL_BELT,
 		PID_MEDCLIP,
 		PID_MEDNEEDLE,
 		PID_MEDTHREAD,
