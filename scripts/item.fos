@@ -323,6 +323,54 @@ void SetWorkbench( Critter& cr, int item_Id, int p1, int p2 )
     item.Update();
 }
 
+void SetChemLab( Critter& cr, int item_Id, int p1, int p2 )
+{
+	Item@ item = GetItem( item_Id );
+	if( !valid( item ) )
+	{
+		return;
+    }
+	
+	item.SetScript( "_InitChemLab" );
+    item.Update();
+}
+
+void SetWeaponWorkbench( Critter& cr, int item_Id, int p1, int p2 )
+{
+	Item@ item = GetItem( item_Id );
+	if( !valid( item ) )
+	{
+		return;
+    }
+	
+	item.SetScript( "_InitWeaponBench" );
+    item.Update();
+}
+
+void SetArmorWorkbench( Critter& cr, int item_Id, int p1, int p2 )
+{
+	Item@ item = GetItem( item_Id );
+	if( !valid( item ) )
+	{
+		return;
+    }
+	
+	item.SetScript( "_InitArmourBench" );
+    item.Update();
+}
+
+void SetAmmoWorkbench( Critter& cr, int item_Id, int p1, int p2 )
+{
+	Item@ item = GetItem( item_Id );
+	if( !valid( item ) )
+	{
+		return;
+    }
+	
+	item.SetScript( "_InitAmmoBench" );
+    item.Update();
+}
+// базовый верстак
 void _InitWorkBench( Item& item, bool firstTime )
 {
     item.SetEvent( ITEM_EVENT_SKILL, "e_WorkBenchPick" );
@@ -453,7 +501,96 @@ bool e_WorkBenchPick( Item& item, Critter& cr, int skill )
     }
     return true;
 }
+// оружейный верстак 
+void _InitWeaponBench( Item& item, bool firstTime )
+{
+    item.SetEvent( ITEM_EVENT_SKILL, "e_WeaponBench" );
+}
 
+bool e_WeaponBench( Item& item, Critter& cr, int skill )
+{
+    if( ( skill == SKILL_PICK_ON_GROUND ) && ( item.Accessory == ACCESSORY_HEX ) )
+    {
+        Item@ Workplace;
+        @Workplace = cr.GetMap().GetItem( cr.HexX, cr.HexY, PID_GRAPPLE_HOOK );
+        if( !valid( Workplace ) )
+        {
+            @Workplace = cr.GetMap().AddItem( cr.HexX, cr.HexY, PID_GRAPPLE_HOOK, 1 );
+        }
+        Workplace.SetScript( "_WorkplaceInit" );
+        if( cr.CountItem( PID_WEAPONBENCH_TOKEN ) == 0 ) cr.AddItem( PID_WEAPONBENCH_TOKEN, 1 );
+        cr.ShowScreen( SCREEN_FIXBOY, 0, "" );
+    }
+    return true;
+}
+// химическая лаборатория
+void _InitChemLab ( Item& item, bool firstTime)
+{
+    item.SetEvent( ITEM_EVENT_SKILL, "e_ChemLabPick" );
+}
+
+bool e_ChemLabPick( Item& item, Critter& cr, int skill )
+{
+    if( ( skill == SKILL_PICK_ON_GROUND ) && ( item.Accessory == ACCESSORY_HEX ) )
+    {
+        Item@ Workplace;
+        @Workplace = cr.GetMap().GetItem( cr.HexX, cr.HexY, PID_GRAPPLE_HOOK );
+        if( !valid( Workplace ) ) {
+            @Workplace = cr.GetMap().AddItem( cr.HexX, cr.HexY, PID_GRAPPLE_HOOK, 1 );
+            Workplace.SetScript( "_WorkplaceInit" );
+        }
+        
+        if( cr.CountItem( PID_LAB_TOKEN ) == 0 ) cr.AddItem( PID_LAB_TOKEN, 1 );
+        cr.ShowScreen( SCREEN_FIXBOY, 0, "" );
+    }
+    return true;
+}
+// верстак для брони
+void _InitArmourBench ( Item& item, bool firstTime)
+{
+    item.SetEvent( ITEM_EVENT_SKILL, "e_ArmourBrenchPick" );
+}
+
+bool e_ArmourBrenchPick( Item& item, Critter& cr, int skill )
+{
+    if( ( skill == SKILL_PICK_ON_GROUND ) && ( item.Accessory == ACCESSORY_HEX ) )
+    {
+        Item@ Workplace;
+        @Workplace = cr.GetMap().GetItem( cr.HexX, cr.HexY, PID_GRAPPLE_HOOK );
+        if( !valid( Workplace ) ) {
+            @Workplace = cr.GetMap().AddItem( cr.HexX, cr.HexY, PID_GRAPPLE_HOOK, 1 );
+            Workplace.SetScript( "_WorkplaceInit" );
+        }
+        
+        if( cr.CountItem( PID_ARMOURBENCH_TOKEN ) == 0 ) cr.AddItem( PID_ARMOURBENCH_TOKEN, 1 );
+        cr.ShowScreen( SCREEN_FIXBOY, 0, "" );
+    }
+    return true;
+}
+
+// патронный верстак
+void _InitAmmoBench ( Item& item, bool firstTime)
+{
+    item.SetEvent( ITEM_EVENT_SKILL, "e_AmmoBenchPick" );
+}
+
+bool e_AmmoBenchPick( Item& item, Critter& cr, int skill )
+{
+    if( ( skill == SKILL_PICK_ON_GROUND ) && ( item.Accessory == ACCESSORY_HEX ) )
+    {
+        Item@ Workplace;
+        @Workplace = cr.GetMap().GetItem( cr.HexX, cr.HexY, PID_GRAPPLE_HOOK );
+        if( !valid( Workplace ) ) {
+            @Workplace = cr.GetMap().AddItem( cr.HexX, cr.HexY, PID_GRAPPLE_HOOK, 1 );
+            Workplace.SetScript( "_WorkplaceInit" );
+        }
+        
+        if( cr.CountItem( PID_AMMOBENCH_TOKEN ) == 0 ) cr.AddItem( PID_AMMOBENCH_TOKEN, 1 );
+        cr.ShowScreen( SCREEN_FIXBOY, 0, "" );
+    }
+    return true;
+}
+//
 void _WorkplaceInit( Item& item, bool firstTime )
 {
     item.SetEvent( ITEM_EVENT_SKILL, "e_TokenPick" );

@@ -16069,3 +16069,42 @@ SoundId=48
 Cost=5
 Material=1
 StartValue_0=0
+
+# PID_ARMOURBENCH_TOKEN
+[Proto]
+ProtoId=23818
+Type=5
+ScriptModule=item
+ScriptFunc=_InitToken
+PicMap=art\items\workbench\manufact_leather1.fofrm
+PicInv=art\items\workbench\manufact_leather1.fofrm
+Flags=1572894
+DisableEgg=1
+Stackable=1
+SoundId=48
+
+# PID_LAB_TOKEN
+[Proto]
+ProtoId=23819
+Type=5
+ScriptModule=item
+ScriptFunc=_InitToken
+PicMap=art\items\workbench\basic_chemical.fofrm
+PicInv=art\items\workbench\basic_chemical.fofrm
+Flags=1572894
+DisableEgg=1
+Stackable=1
+SoundId=48
+
+# PID_WEAPONBENCH_TOKEN
+[Proto]
+ProtoId=23820
+Type=5
+ScriptModule=item
+ScriptFunc=_InitToken
+PicMap=art\items\workbench\workbench1.fofrm
+PicInv=art\items\workbench\workbench1.fofrm
+Flags=1572894
+DisableEgg=1
+Stackable=1
+SoundId=48

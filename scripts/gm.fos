@@ -32,6 +32,11 @@ import uint CountMapPlayers( Map@ map ) from "manager";
 import void ShowInputBoxScreen( Critter& cr, string funcName, uint16 textLength, uint8 flags ) from "main";
 
 import void SetWorkbench( Critter& cr, int p0, int p1, int p2 )  from "item";
+import void SetChemLab( Critter& cr, int p0, int p1, int p2 )  from "item";
+import void SetWeaponWorkbench( Critter& cr, int p0, int p1, int p2 )  from "item";
+import void SetArmorWorkbench( Critter& cr, int p0, int p1, int p2 )  from "item";
+import void SetAmmoWorkbench( Critter& cr, int p0, int p1, int p2 )  from "item";
+
 import void SetSecurityDoor( Critter& cr, int p0, int p1, int p2 )  from "item";
 
 import void unsafe_log_2(Critter& cr, int locX, int locY, int type, string@ message, int[] @ p4 ) from "general_unsafe"; 
@@ -4889,12 +4894,16 @@ void answer_GM_PANNEL_ITEM( Critter& player, uint answerI, string& answerS )
 	
 	if( answerI == 1 )
     {
-        player.ShowScreen( SCREEN_DIALOGBOX, 4, "answer_GM_PANNEL_ITEM_SCRIPT" );
+        player.ShowScreen( SCREEN_DIALOGBOX, 7, "answer_GM_PANNEL_ITEM_SCRIPT" );
         player.Say( SAY_DIALOGBOX_TEXT, "Item, protoID =" + item.GetProtoId() + ", Id =" + item.Id );
         player.Say( SAY_DIALOGBOX_BUTTON( 0 ), "Workbench" );
-		player.Say( SAY_DIALOGBOX_BUTTON( 1 ), "Furniture" );
-		player.Say( SAY_DIALOGBOX_BUTTON( 2 ), "Dialog Door" );
-		player.Say( SAY_DIALOGBOX_BUTTON( 3 ), "Delete Script" );
+		player.Say( SAY_DIALOGBOX_BUTTON( 1 ), "Chemical lab" );
+		player.Say( SAY_DIALOGBOX_BUTTON( 2 ), "Ammo Workbench" );
+		player.Say( SAY_DIALOGBOX_BUTTON( 3 ), "Weapon Workbench" );
+		player.Say( SAY_DIALOGBOX_BUTTON( 4 ), "Armor Workbench" );		
+		player.Say( SAY_DIALOGBOX_BUTTON( 5 ), "Furniture" );	
+		player.Say( SAY_DIALOGBOX_BUTTON( 6 ), "Delete Script" );
+	//	player.Say( SAY_DIALOGBOX_BUTTON( 7 ), "Dialog Door" );
     }
 	
 	if( answerI == 2 )
@@ -5099,27 +5108,50 @@ void answer_GM_PANNEL_ITEM_SCRIPT( Critter& player, uint answerI, string& answer
 		SetWorkbench( player, item.Id, 0, 0 );
     }
 	
-	if( answerI == 1 ) 
+	if( answerI == 1 )
+    {
+		unsafe_log_2( player, 0, 0, 0, player.Name + " " + player.Id + " has set workbench script for item: " + item.Id + "", null );
+		SetChemLab( player, item.Id, 0, 0 );
+    }
+	
+	if( answerI == 2 )
+    {
+		unsafe_log_2( player, 0, 0, 0, player.Name + " " + player.Id + " has set workbench script for item: " + item.Id + "", null );
+		SetAmmoWorkbench( player, item.Id, 0, 0 );
+    }
+	
+	if( answerI == 3 )
+    {
+		unsafe_log_2( player, 0, 0, 0, player.Name + " " + player.Id + " has set workbench script for item: " + item.Id + "", null );
+		SetWeaponWorkbench( player, item.Id, 0, 0 );
+    }
+	
+	if( answerI == 4 )
+    {
+		unsafe_log_2( player, 0, 0, 0, player.Name + " " + player.Id + " has set workbench script for item: " + item.Id + "", null );
+		SetArmorWorkbench( player, item.Id, 0, 0 );
+    }
+	
+	if( answerI == 5 ) 
 	{
 		unsafe_log_2( player, 0, 0, 0, player.Name + " " + player.Id + " has set furniture script for item: " + item.Id + "", null );
 		_InitFurniture( item, true );
 		item.Update();
 	}
-	
-	if( answerI == 2 ) 
-	{
-		unsafe_log_2( player, 0, 0, 0, player.Name + " " + player.Id + " has set security door script for item: " + item.Id + "", null );
-		SetSecurityDoor( player, item.Id, 0, 0 );
-	}
-	
-	if( answerI == 3 ) 
+	player.Say( SAY_NETMSG, "|0xFFFF00 Script set." );
+	if( answerI == 6 ) 
 	{
 		item.SetScript( "_DeleteScript" );
 		player.Say( SAY_NETMSG, "|0xFFFF00 Script deleted." );
 		unsafe_log_2( player, 0, 0, 0, player.Name + " " + player.Id + " has deleted all scripts for item: " + item.Id + "", null );
 		return;
 	}
-	player.Say( SAY_NETMSG, "|0xFFFF00 Script set." );
+//	if( answerI == 6 ) 
+//	{
+//		unsafe_log_2( player, 0, 0, 0, player.Name + " " + player.Id + " has set security door script for item: " + item.Id + "", null );
+//		SetSecurityDoor( player, item.Id, 0, 0 );
+//	}	
+	
 }
 
 void _DeleteScript( Item& item, bool firstTime )

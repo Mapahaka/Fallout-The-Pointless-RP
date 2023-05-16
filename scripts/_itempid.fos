@@ -2386,9 +2386,12 @@
 #define PID_PHOTO                             		( 1547 )						// Фотоаппарат
 #define PID_HYPO_BLOOD                        		( 1550 )						// Шприц с кровью
 
-#define PID_TRIGGER                           		( 3852 )						// 
-#define PID_AMMOBENCH_TOKEN                   		( 3898 )						// Tech item for ammo workbench
+#define PID_TRIGGER                           		( 3852 )						//
+#define PID_AMMOBENCH_TOKEN                   		( 3898 )						// Tech item for ammo workbench 
 #define PID_WORKBENCH_TOKEN                   		( 3978 )						// Tech item for workbench
+#define PID_ARMOURBENCH_TOKEN                   	( 23818 )						// Tech item for armor workbench
+#define PID_LAB_TOKEN                   			( 23819 )						// Tech item for chemical lab
+#define PID_WEAPONBENCH_TOKEN                   	( 23820 )						// Tech item for weapons workbench
 #define PID_FIREPLACE_TOKEN                   		( 3979 )						// Tech item for fireplace crafts
 
 #define PID_H_CLAW							  		( 1221 )						// Череп когтя смерти

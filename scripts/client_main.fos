@@ -5116,7 +5116,7 @@ void items_collection( int collection, ItemCl@[]& items )
 			if( valid( stuff ) )
 			{
 				uint16 pid = stuff.GetProtoId();
-				if( pid == PID_WORKBENCH_TOKEN || pid == PID_FIREPLACE_TOKEN || pid == PID_AMMOBENCH_TOKEN ) // Delete this shit once refactor of crafting module is done!!!
+				if( pid == PID_WORKBENCH_TOKEN || pid == PID_FIREPLACE_TOKEN || pid == PID_AMMOBENCH_TOKEN || pid == PID_ARMOURBENCH_TOKEN || pid == PID_LAB_TOKEN || pid == PID_WEAPONBENCH_TOKEN) // Delete this shit once refactor of crafting module is done!!!
 				{
 					@items[i] = null;
 				}
