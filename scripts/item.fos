@@ -616,9 +616,27 @@ void e_WorkplaceWalk( Item& item, Critter& cr, bool entered, uint8 dir )
 		}
 		
 		Item@Token3 = cr.GetItem( PID_AMMOBENCH_TOKEN, -1 );
-        if( valid( Token2 ) )
+        if( valid( Token3 ) )
 		{
-			DeleteItem( Token2 ); 
+			DeleteItem( Token3 ); 
+		}
+		
+		Item@Token4 = cr.GetItem( PID_ARMOURBENCH_TOKEN, -1 );
+        if( valid( Token4 ) )
+		{
+			DeleteItem( Token4 );
+	    }
+		
+		Item@Token5 = cr.GetItem( PID_LAB_TOKEN, -1 );
+        if( valid( Token5 ) )
+		{
+			DeleteItem( Token5 ); 
+		}
+		
+		Item@Token6 = cr.GetItem( PID_WEAPONBENCH_TOKEN, -1 );
+        if( valid( Token6 ) )
+		{
+			DeleteItem( Token6 ); 
 		}
 	}
 }
